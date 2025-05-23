@@ -4,6 +4,26 @@
         <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+
+        <!-- NuGet Package Properties -->
+        <IsPackable>true</IsPackable>
+        <PackageId>BlazorTablerIcons</PackageId>
+        <Version>1.0.0</Version>
+        <Authors>Scippo97 Sensible Productions</Authors>
+        <Description>A Blazor component library for easily using Tabler Icons with IntelliSense.</Description>
+        <Copyright>Copyright (c) $([System.DateTime]::Now.ToString('yyyy')) Your Name / Company Name</Copyright>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageProjectUrl>https://github.com/lorenzodimauro97/BlazorTablerIcons</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/lorenzodimauro97/BlazorTablerIcons.git</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>blazor;icons;tabler-icons;tabler;ui;components;razor</PackageTags>
+        <PackageReleaseNotes>
+            v1.0.0: Initial release.
+            - TablerIcon component for Outline and Filled icons.
+            - PowerShell script for generating icon enums.
+        </PackageReleaseNotes>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
     </PropertyGroup>
 
 
