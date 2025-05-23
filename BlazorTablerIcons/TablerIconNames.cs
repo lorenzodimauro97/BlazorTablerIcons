@@ -11941,7 +11941,7 @@ namespace BlazorTablerIcons
             // Example: Icon123 -> icon-123. We want 123.
             // This part is tricky without knowing the exact original.
             // The ConvertTo-PascalCaseIdentifier prefixes with Icon for numbers.
-            // So, if esult starts with icon- and the next char is a digit, strip icon-.
+            // So, if result starts with icon- and the next char is a digit, strip icon-.
             if (result.StartsWith("icon-") && result.Length > 5 && char.IsDigit(result[5]))
             {
                 result = result.Substring(5);
