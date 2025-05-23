@@ -78,7 +78,7 @@ Use the `<TablerIcon />` component in your Razor files:
 </button>
 ```
 
-![img.png](example.png)
+![example.png](https://github.com/lorenzodimauro97/BlazorTablerIcons/blob/master/BlazorTablerIcons/example.png)
 
 ### Component Parameters
 
