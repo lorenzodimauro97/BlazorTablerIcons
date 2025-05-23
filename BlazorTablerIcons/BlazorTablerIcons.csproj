@@ -11,7 +11,6 @@
         <Version>1.0.0</Version>
         <Authors>Scippo97 Sensible Productions</Authors>
         <Description>A Blazor component library for easily using Tabler Icons with IntelliSense.</Description>
-        <Copyright>Copyright (c) $([System.DateTime]::Now.ToString('yyyy')) Your Name / Company Name</Copyright>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/lorenzodimauro97/BlazorTablerIcons</PackageProjectUrl>
         <RepositoryUrl>https://github.com/lorenzodimauro97/BlazorTablerIcons.git</RepositoryUrl>
@@ -23,6 +22,7 @@
             - PowerShell script for generating icon enums.
         </PackageReleaseNotes>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
 
     </PropertyGroup>
 
@@ -37,6 +37,10 @@
 
     <ItemGroup>
       <Folder Include="wwwroot\" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="README.md" Pack="true" PackagePath="\"/>
     </ItemGroup>
 
 </Project>
