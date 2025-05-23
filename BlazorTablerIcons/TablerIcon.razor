@@ -1,0 +1,127 @@
+﻿<i class="@FinalCssClass" style="@FinalStyle" @attributes="AdditionalAttributes"></i>
+
+@code {
+    /// <summary>
+    /// Specifies the Outline style icon to display.
+    /// If both OutlineIcon and FilledIcon are set, OutlineIcon takes precedence.
+    /// </summary>
+    [Parameter]
+    public TablerIconOutlineName OutlineIcon { get; set; } = TablerIconOutlineName.None;
+
+    /// <summary>
+    /// Specifies the Filled style icon to display.
+    /// Used if OutlineIcon is not set or is None.
+    /// </summary>
+    [Parameter]
+    public TablerIconFilledName FilledIcon { get; set; } = TablerIconFilledName.None;
+
+    /// <summary>
+    /// Custom size for the icon (e.g., "24px", "2rem", "1.5em").
+    /// Overrides default font size.
+    /// </summary>
+    [Parameter]
+    public string? Size { get; set; }
+
+    /// <summary>
+    /// Stroke width for outline icons (e.g., "1.5", "2").
+    /// Tabler icons default is usually 2.
+    /// This directly sets the 'stroke-width' CSS property.
+    /// </summary>
+    [Parameter]
+    public string? StrokeWidth { get; set; } // Changed to string to allow for units like "1.5px" if needed, though usually just number
+
+    /// <summary>
+    /// Custom color for the icon (e.g., "red", "#FF5733", "var(--my-color)").
+    /// </summary>
+    [Parameter]
+    public string? Color { get; set; }
+
+    /// <summary>
+    /// Additional CSS classes to apply to the icon element.
+    /// </summary>
+    [Parameter]
+    public string? Class { get; set; }
+
+    /// <summary>
+    /// Captures unmatched HTML attributes to apply to the icon element.
+    /// </summary>
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string? _iconName;
+    private bool _isOutline;
+
+    protected override void OnParametersSet()
+    {
+        _iconName = null; // Reset
+        _isOutline = false;
+
+        if (OutlineIcon != TablerIconOutlineName.None)
+        {
+            _iconName = OutlineIcon.ToKebabCase();
+            _isOutline = true;
+        }
+        else if (FilledIcon != TablerIconFilledName.None)
+        {
+            _iconName = FilledIcon.ToKebabCase();
+            _isOutline = false;
+        }
+    }
+
+    private string FinalCssClass
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(_iconName))
+            {
+                return Class ?? ""; // No icon to display, just custom class
+            }
+            // Base Tabler class and specific icon class
+            // For filled icons, Tabler might not use a "ti-filled-" prefix, just "ti ti-icon-name" and relies on different font or CSS.
+            // However, if they have distinct filled classes (e.g., if using SVG sprite or specific filled font variants), adjust here.
+            // The Tabler webfont typically styles based on `ti ti-icon-name`. Fill vs Outline might be a different font file or stylistic choice.
+            // For simplicity with the single `ti ti-icon-name` convention:
+            var css = $"ti ti-{_iconName}";
+            
+            // If filled icons have a distinct class prefix in the webfont (uncommon but possible)
+            // if (!_isOutline && FilledIcon != TablerIconFilledName.None) {
+            //     css += " ti-filled"; // Example if there's a global filled class
+            // }
+
+            if (!string.IsNullOrWhiteSpace(Class))
+            {
+                css += $" {Class}";
+            }
+            return css.Trim();
+        }
+    }
+
+    private string FinalStyle
+    {
+        get
+        {
+            var styleBuilder = new System.Text.StringBuilder();
+            if (!string.IsNullOrWhiteSpace(Size))
+            {
+                styleBuilder.Append($"font-size: {Size};");
+            }
+            if (!string.IsNullOrWhiteSpace(Color))
+            {
+                styleBuilder.Append($"color: {Color};");
+            }
+            if (_isOutline && !string.IsNullOrWhiteSpace(StrokeWidth))
+            {
+                // Tabler icons use CSS custom property `--ti-stroke-width` or direct `stroke-width` for SVGs.
+                // For webfont, stroke-width is usually baked into the font design.
+                // If you are using SVGs or a font that supports it, you can set it.
+                // The default webfont might not respond to this dynamically for stroke-width easily.
+                // This is more relevant if you switch to SVG rendering later.
+                // For webfont, Tabler might offer classes like `ti-sw-1`, `ti-sw-1-5`.
+                // Let's assume this might be useful for future SVG compatibility or specific font versions.
+                 styleBuilder.Append($"--ti-stroke-width: {StrokeWidth};"); // For newer Tabler CSS that might use this
+                 // styleBuilder.Append($"stroke-width: {StrokeWidth};"); // More direct for inline SVGs
+            }
+            return styleBuilder.ToString();
+        }
+    }
+}
